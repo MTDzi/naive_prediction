@@ -51,6 +51,7 @@ void GNB::train(vector<vector<double>> data, vector<string> labels) {
         data - array of N observations
           - Each observation is a tuple with 4 values: s, d,
             s_dot and d_dot.
+            TODO: create more features
           - Example : [
                   [3.5, 0.1, 5.9, -0.02],
                   [8.0, -0.3, 3.0, 2.2],
@@ -135,6 +136,7 @@ string GNB::predict(vector<double> sample) {
     double left_p = 1.0;
     double keep_p = 1.0;
     double right_p = 1.0;
+    // TODO: Madre dios, parametrize the number of features!
     for (int i=0; i<4; i++){
         left_p *= (1.0/sqrt(2.0 * M_PI * pow(left_sds[i], 2))) * exp(-0.5*pow(sample[i] - left_means[i], 2)/pow(left_sds[i], 2));
         keep_p *= (1.0/sqrt(2.0 * M_PI * pow(keep_sds[i], 2))) * exp(-0.5*pow(sample[i] - keep_means[i], 2)/pow(keep_sds[i], 2));
@@ -147,6 +149,7 @@ string GNB::predict(vector<double> sample) {
     keep_p *= keep_prior;
     right_p *= right_prior;
 
+    // TODO: parametrize number and types of classes
     double probs[3] = {left_p, keep_p, right_p};
     double max = left_p;
     double max_index = 0;
